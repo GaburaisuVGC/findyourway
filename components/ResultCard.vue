@@ -1,25 +1,29 @@
 <template>
-  <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 text-center">
+  <div class="bg-white rounded-xl p-6 mb-4">
     <LightningCircle :percentage="chances" />
     
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold mb-2">{{ chances }}%</h2>
-      <p class="text-lg text-gray-600">{{ getChanceLevel(chances) }}</p>
+    <div class="text-center mb-4">
+      <div class="flex items-center justify-center gap-2 text-xl mb-2">
+        <span class="font-bold" style="color: #212121;">{{ chances }}%</span>
+        <span style="color: #212121;">·</span>
+        <span style="color: #212121;">{{ getChanceLevel(chances) }}</span>
+      </div>
     </div>
     
     <Stars :rating="reliability" />
     
-    <p class="text-sm text-gray-500 mb-8 leading-relaxed">
+    <p class="text-xs text-center mb-6 leading-relaxed" style="color: #757575;">
       Cette estimation est fournie à titre indicatif et ne garantit en aucun cas la décision d'admission de l'établissement.
     </p>
-    
-    <button
-      @click="$emit('retry')"
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
-    >
-      Tester une autre formation
-    </button>
   </div>
+  
+  <button
+    @click="$emit('retry')"
+    class="w-full text-white font-medium py-4 px-6 rounded-xl transition-colors"
+    style="background-color: #212121;"
+  >
+    Tester une autre formation
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -36,10 +40,10 @@ defineEmits<{
 }>()
 
 function getChanceLevel(percentage: number): string {
-  if (percentage >= 90) return 'Très élevées'
-  if (percentage >= 75) return 'Élevées'
-  if (percentage >= 50) return 'Moyennes'
-  if (percentage >= 25) return 'Faibles'
-  return 'Très faibles'
+  if (percentage >= 90) return 'très élevées'
+  if (percentage >= 75) return 'élevées'
+  if (percentage >= 50) return 'moyennes'
+  if (percentage >= 25) return 'faibles'
+  return 'très faibles'
 }
 </script>

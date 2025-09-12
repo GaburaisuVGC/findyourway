@@ -1,124 +1,47 @@
 <template>
   <AppLayout>
     <div v-if="!showResult">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="md:col-span-2 space-y-4">
-          <SchoolDropdown
-            :selected-school="selectedSchool"
-            :schools="allSchools"
-            @select="onSelectSchool"
-          />
-          
-          <div class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold mb-4">En quelle classe es-tu ?</h2>
-            <div class="grid grid-cols-2 gap-4">
-              <button
-                v-for="classOption in availableClasses"
-                :key="classOption"
-                @click="selectedClass = classOption"
-                class="border rounded-xl py-3 px-4 text-center hover:bg-blue-50 transition"
-                :class="{ 'bg-blue-100 border-blue-500': classOption === selectedClass }"
-              >
-                {{ classOption }}
-              </button>
-            </div>
-          </div>
-          
-          <div class="bg-white rounded-xl shadow p-6">
-            <h3 class="text-lg font-semibold mb-4">Spécialités</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button
-                v-for="specialty in specialties"
-                :key="specialty"
-                @click="toggleSpecialty(specialty)"
-                class="text-left border rounded-lg py-2 px-3 text-sm hover:bg-gray-50 transition"
-                :class="{ 'bg-blue-50 border-blue-300': selectedSpecialties.includes(specialty) }"
-              >
-                {{ specialty }}
-              </button>
-            </div>
-          </div>
-          
-          <div class="bg-white rounded-xl shadow p-6">
-            <h3 class="text-lg font-semibold mb-4">Notes</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm text-gray-600 mb-1">Moyenne générale</label>
-                <input
-                  v-model="grades.general"
-                  type="number"
-                  min="0"
-                  max="20"
-                  step="0.1"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                  placeholder="16.5"
-                >
-              </div>
-              <div>
-                <label class="block text-sm text-gray-600 mb-1">Français</label>
-                <input
-                  v-model="grades.french"
-                  type="number"
-                  min="0"
-                  max="20"
-                  step="0.1"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                  placeholder="15.0"
-                >
-              </div>
-              <div>
-                <label class="block text-sm text-gray-600 mb-1">Mathématiques</label>
-                <input
-                  v-model="grades.math"
-                  type="number"
-                  min="0"
-                  max="20"
-                  step="0.1"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                  placeholder="14.0"
-                >
-              </div>
-              <div>
-                <label class="block text-sm text-gray-600 mb-1">Sciences</label>
-                <input
-                  v-model="grades.science"
-                  type="number"
-                  min="0"
-                  max="20"
-                  step="0.1"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                  placeholder="16.0"
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <aside class="space-y-4">
-          <div class="bg-white rounded-xl shadow p-6">
-            <h3 class="font-semibold mb-3">Résumé</h3>
-            <div class="space-y-2 text-sm">
-              <p>Lycée : <span class="font-medium">{{ selectedSchool.name }}</span></p>
-              <p>Classe : <span class="font-medium">{{ selectedClass }}</span></p>
-              <p v-if="selectedSpecialties.length">
-                Spécialités : <span class="font-medium">{{ selectedSpecialties.join(', ') }}</span>
-              </p>
-            </div>
-          </div>
-
-          <div class="bg-white rounded-xl shadow p-6 text-center">
-            <button
-              @click="confirmEstimation"
-              class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-medium transition-colors"
-            >
-              Confirmer
-            </button>
-          </div>
-        </aside>
+      <SchoolCard 
+        :school="selectedSchool" 
+        :school-type="schoolType"
+        @modify="showSchoolDropdown = true"
+      />
+      
+      <SchoolDropdown
+        :selected-school="selectedSchool"
+        :schools="allSchools"
+        :is-open="showSchoolDropdown"
+        @select="onSelectSchool"
+        @close="showSchoolDropdown = false"
+      />
+      
+      <ClassDropdown v-model="selectedClass" />
+      
+      <SpecialtiesDropdown v-model="selectedSpecialties" />
+      
+      <GradesDropdown v-model="grades" />
+      
+      <div class="mt-8">
+        <button
+          @click="confirmEstimation"
+          :disabled="!canConfirm"
+          class="w-full font-medium py-4 px-6 rounded-xl transition-all duration-300"
+          :class="canConfirm 
+            ? 'button-enabled' 
+            : 'button-disabled'"
+        >
+          Confirmer
+        </button>
       </div>
     </div>
     
-    <div v-else class="flex justify-center items-center min-h-[60vh]">
+    <div v-else class="animate-fade-in">
+      <UniversityResult
+        university-name="EDHEC Business School"
+        location="Roubaix"
+        specialty="International BBA"
+      />
+      
       <ResultCard
         :chances="estimationResult.chances"
         :reliability="estimationResult.reliability"
@@ -130,7 +53,12 @@
 
 <script setup lang="ts">
 import AppLayout from '../components/AppLayout.vue'
+import SchoolCard from '../components/SchoolCard.vue'
 import SchoolDropdown from '../components/SchoolDropdown.vue'
+import ClassDropdown from '../components/ClassDropdown.vue'
+import SpecialtiesDropdown from '../components/SpecialtiesDropdown.vue'
+import GradesDropdown from '../components/GradesDropdown.vue'
+import UniversityResult from '../components/UniversityResult.vue'
 import ResultCard from '../components/ResultCard.vue'
 import { useRandomForm } from '../composables/useRandomForm'
 import type { School } from '../types'
@@ -138,6 +66,7 @@ import type { School } from '../types'
 const { data } = await useRandomForm()
 
 const showResult = ref(false)
+const showSchoolDropdown = ref(false)
 
 const SCHOOLS = [
   "Etienne Dolet",
@@ -161,8 +90,6 @@ const SCHOOLS = [
   "Lycée privé Saint-Michel de Picpus"
 ]
 
-const availableClasses = ['Seconde', 'Première', 'Terminale']
-
 function createSchoolsArray(): School[] {
   return SCHOOLS.map((name, index) => ({
     id: index + 1,
@@ -173,64 +100,43 @@ function createSchoolsArray(): School[] {
 
 const allSchools = ref(createSchoolsArray())
 const selectedSchool = ref(data?.value?.school ?? getRandomSchool())
-const selectedClass = ref(data.value?.classCard?.level ?? getRandomClass())
+const selectedClass = ref({ level: data.value?.classCard?.level ?? '', type: '' })
 const selectedSpecialties = ref<string[]>([])
-const grades = ref({
-  general: '',
-  french: '',
-  math: '',
-  science: ''
-})
+const grades = ref<Array<{ name: string; grade: string }>>([])
 
 const estimationResult = ref({
   chances: 0,
   reliability: 0
 })
 
-const specialties = [
-  'Mathématiques',
-  'Physique-Chimie',
-  'SVT',
-  'Histoire-Géographie',
-  'Langues vivantes',
-  'Littérature',
-  'Économie',
-  'Arts',
-  'Informatique',
-  'Philosophie'
-]
+const schoolType = computed(() => {
+  return Math.random() > 0.5 ? 'Lycée Public' : 'Lycée Privé'
+})
 
-function getRandomClass() {
-  return availableClasses[Math.floor(Math.random() * availableClasses.length)]
-}
+const canConfirm = computed(() => {
+  return selectedSchool.value && selectedClass.value.level && selectedClass.value.type
+})
 
 function getRandomSchool(): School {
-  const defaultSchool: School = { id: 1, name: SCHOOLS[0] ?? 'Unknown School', city: 'Paris' };
-  return allSchools.value[Math.floor(Math.random() * allSchools.value.length)] ?? defaultSchool;
+  const defaultSchool: School = { id: 1, name: SCHOOLS[0] ?? 'Unknown School', city: 'Paris' }
+  return allSchools.value[Math.floor(Math.random() * allSchools.value.length)] ?? defaultSchool
 }
 
 function onSelectSchool(school: School) {
   selectedSchool.value = school
-}
-
-function toggleSpecialty(specialty: string) {
-  const index = selectedSpecialties.value.indexOf(specialty)
-  if (index > -1) {
-    selectedSpecialties.value.splice(index, 1)
-  } else {
-    selectedSpecialties.value.push(specialty)
-  }
+  showSchoolDropdown.value = false
 }
 
 function calculateChances(): { chances: number, reliability: number } {
   let baseChances = Math.floor(Math.random() * 101)
   let reliability = 3.5 + Math.random() * 1.5
   
-  if (grades.value.general) {
-    const generalGrade = parseFloat(grades.value.general)
-    if (generalGrade >= 16) baseChances = Math.min(100, baseChances + 20)
-    else if (generalGrade >= 14) baseChances = Math.min(100, baseChances + 10)
-    else if (generalGrade >= 12) baseChances = Math.min(100, baseChances + 5)
+  const validGrades = grades.value.filter(g => g.name && g.grade)
+  if (validGrades.length > 0) {
+    const avgGrade = validGrades.reduce((sum, g) => sum + parseFloat(g.grade), 0) / validGrades.length
+    if (avgGrade >= 16) baseChances = Math.min(100, baseChances + 20)
+    else if (avgGrade >= 14) baseChances = Math.min(100, baseChances + 10)
+    else if (avgGrade >= 12) baseChances = Math.min(100, baseChances + 5)
     else baseChances = Math.max(0, baseChances - 10)
     
     reliability += 0.3
@@ -250,20 +156,18 @@ function calculateChances(): { chances: number, reliability: number } {
 }
 
 function confirmEstimation() {
+  if (!canConfirm.value) return
+  
   estimationResult.value = calculateChances()
   showResult.value = true
 }
 
 function resetForm() {
   showResult.value = false
+  showSchoolDropdown.value = false
   selectedSchool.value = getRandomSchool()
-  selectedClass.value = getRandomClass()
+  selectedClass.value = { level: '', type: '' }
   selectedSpecialties.value = []
-  grades.value = {
-    general: '',
-    french: '',
-    math: '',
-    science: ''
-  }
+  grades.value = []
 }
 </script>
