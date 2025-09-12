@@ -7,22 +7,24 @@
     >
       <div class="flex-1">
         <div class="font-medium text-base">Classe</div>
-        <div v-if="!isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200" style="color: #757575;">
-          À compléter
-        </div>
-        <div v-else-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200" style="color: #212121;">
+        <div v-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200" style="color: #212121;">
           {{ selectedLevel }}{{ selectedType ? ', ' + selectedType : '' }}
         </div>
       </div>
-      <svg 
-        class="w-5 h-5 transition-transform duration-300" 
-        :class="{ 'transform rotate-180': isOpen }" 
-        fill="none" 
-        stroke="currentColor" 
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+      <div class="flex items-center gap-2">
+        <div v-if="!isComplete && !isOpen" class="text-sm transition-all duration-200" style="color: #757575;">
+          À compléter
+        </div>
+        <svg 
+          class="w-5 h-5 transition-transform duration-300" 
+          :class="{ 'transform rotate-180': isOpen }" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
     </button>
     
     <div v-if="isOpen" class="p-4">
