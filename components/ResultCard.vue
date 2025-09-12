@@ -20,6 +20,7 @@
     </p>
   </div>
   
+  <div class="pt-6">
   <button
     @click="$emit('retry')"
     class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors button-enabled"
@@ -27,6 +28,7 @@
   >
     Tester une autre formation
   </button>
+  </div>
 </template>
 
 <script setup lang="ts">
