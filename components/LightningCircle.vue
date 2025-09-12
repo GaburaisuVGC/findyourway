@@ -32,9 +32,9 @@
         />
       </svg>
       
-      <div class="inset-0 flex items-center justify-center" style="position: relative; top: 20%">
+      <div class="inset-0 flex items-center justify-center" style="position: relative; top: 22%">
         <div class="w-16 h-16 flex items-center justify-center">
-          <span class="text-xl">⚡</span>
+          <span class="text-xl lightning">⚡</span>
         </div>
       </div>
     </div>

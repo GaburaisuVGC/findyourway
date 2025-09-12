@@ -9,9 +9,12 @@
         <span style="color: #212121;">{{ getChanceLevel(chances) }}</span>
       </div>
     </div>
-    
-    <Stars :rating="reliability" />
-    
+
+    <div class="flex items-center justify-center gap-2 mb-4">
+      <span class="reliability font-medium text-gray-700 leading-none">Fiabilité</span>
+      <Stars :rating="reliability" />
+    </div>
+
     <p class="text-xs text-center mb-6 leading-relaxed" style="color: #757575;">
       Cette estimation est fournie à titre indicatif et ne garantit en aucun cas la décision d'admission de l'établissement.
     </p>

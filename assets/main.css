@@ -153,6 +153,14 @@ html, body {
     width: 124px;
 }
 
+.lightning {
+    font-size: xxx-large;
+}
+
+.reliability {
+    font-size: 12px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
