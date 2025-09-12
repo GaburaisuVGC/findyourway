@@ -1,8 +1,13 @@
 <template>
   <div class="min-h-screen flex flex-col" style="background-color: #F7F3F0;">
     <header class="bg-white min-h-[60px] flex items-center">
-      <div class="w-full px-4 md:px-8 lg:px-16 xl:px-24 flex items-center gap-2">
-        <img src="/logo.png" alt="Edumapper Logo" class="h-10 w-auto" />
+      <div class="w-full px-4 md:px-8 lg:px-16 xl:px-24 flex items-center">
+        <img 
+          src="/logo.png" 
+          alt="Edumapper Logo" 
+          class="h-10 cursor-pointer"
+          @click="reloadPage"
+        />
       </div>
     </header>
 
@@ -13,3 +18,9 @@
     </main>
   </div>
 </template>
+
+<script setup lang="ts">
+function reloadPage() {
+  window.location.reload()
+}
+</script>
