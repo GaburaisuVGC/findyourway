@@ -40,10 +40,10 @@ defineEmits<{
 }>()
 
 function getChanceLevel(percentage: number): string {
-  if (percentage >= 90) return 'très élevées'
-  if (percentage >= 75) return 'élevées'
-  if (percentage >= 50) return 'moyennes'
-  if (percentage >= 25) return 'faibles'
-  return 'très faibles'
+  if (percentage >= 90) return 'Très élevées'
+  if (percentage >= 75) return 'Élevées'
+  if (percentage >= 50) return 'Moyennes'
+  if (percentage >= 25) return 'Faibles'
+  return 'Très faibles'
 }
 </script>

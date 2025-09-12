@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-xl mb-4 relative animate-slide-up">
     <button
-      @click="isOpen = !isOpen"
+      @click="toggleOpen"
       class="w-full p-4 flex items-center justify-between text-left rounded-xl border-none outline-none transition-all duration-200 hover:shadow-md"
       style="color: #212121;"
     >
@@ -29,8 +29,8 @@
       <div class="p-4">
         <div class="mb-4 space-y-3">
           <div 
-            v-for="(subject, index) in subjects" 
-            :key="index"
+            v-for="(subject, index) in internalSubjects" 
+            :key="`subject-${index}`"
             class="flex items-center gap-3 animate-slide-up"
           >
             <input
@@ -53,6 +53,7 @@
             <button
               @click="removeSubject(index)"
               class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200"
+              :disabled="internalSubjects.length === 1"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -71,7 +72,7 @@
         
         <button
           @click="confirmSelection"
-          class="w-full text-white font-medium py-4 px-6 rounded-lg button-confirm"
+          class="w-full text-white font-medium py-4 px-6 button-confirm"
           style="background-color: #212121;"
         >
           Confirmer
@@ -93,36 +94,59 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Subject[]): void
+  (e: 'open'): void
+  (e: 'close'): void
 }>()
 
 const isOpen = ref(false)
-const subjects = ref<Subject[]>([...props.modelValue])
+const internalSubjects = ref<Subject[]>([{ name: '', grade: '' }])
 
-if (subjects.value.length === 0) {
-  subjects.value.push({ name: '', grade: '' })
-}
+// Watch for changes from parent
+watch(() => props.modelValue, (newValue) => {
+  if (newValue && newValue.length > 0) {
+    internalSubjects.value = [...newValue]
+  } else {
+    internalSubjects.value = [{ name: '', grade: '' }]
+  }
+}, { immediate: true, deep: true })
 
 const isComplete = computed(() => 
-  subjects.value.some(s => s.name.trim() && s.grade.trim())
+  internalSubjects.value.some(s => s.name.trim() && s.grade.trim())
 )
 
 const subjectsCount = computed(() => 
-  subjects.value.filter(s => s.name.trim() && s.grade.trim()).length
+  internalSubjects.value.filter(s => s.name.trim() && s.grade.trim()).length
 )
 
+function toggleOpen() {
+  isOpen.value = !isOpen.value
+  if (isOpen.value) {
+    emit('open')
+  } else {
+    emit('close')
+  }
+}
+
 function addSubject() {
-  subjects.value.push({ name: '', grade: '' })
+  internalSubjects.value.push({ name: '', grade: '' })
 }
 
 function removeSubject(index: number) {
-  if (subjects.value.length > 1) {
-    subjects.value.splice(index, 1)
+  if (internalSubjects.value.length > 1) {
+    internalSubjects.value.splice(index, 1)
   }
 }
 
 function confirmSelection() {
-  const validSubjects = subjects.value.filter(s => s.name.trim() && s.grade.trim())
+  const validSubjects = internalSubjects.value.filter(s => s.name.trim() && s.grade.trim())
   emit('update:modelValue', validSubjects)
   isOpen.value = false
+  emit('close')
 }
+
+defineExpose({
+  close: () => {
+    isOpen.value = false
+  }
+})
 </script>

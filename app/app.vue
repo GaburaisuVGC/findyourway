@@ -15,17 +15,29 @@
         @close="showSchoolDropdown = false"
       />
       
-      <ClassDropdown v-model="selectedClass" />
+      <ClassDropdown 
+        ref="classDropdownRef"
+        v-model="selectedClass" 
+        @toggle="onDropdownToggle('class', $event)"
+      />
       
-      <SpecialtiesDropdown v-model="selectedSpecialties" />
+      <SpecialtiesDropdown 
+        ref="specialtiesDropdownRef"
+        v-model="selectedSpecialties" 
+        @toggle="onDropdownToggle('specialties', $event)"
+      />
       
-      <GradesDropdown v-model="grades" />
+      <GradesDropdown 
+        ref="gradesDropdownRef"
+        v-model="grades" 
+        @toggle="onDropdownToggle('grades', $event)"
+      />
       
       <div class="mt-8">
         <button
           @click="confirmEstimation"
           :disabled="!canConfirm"
-          class="w-full font-medium py-4 px-6 rounded-xl transition-all duration-300"
+          class="w-full font-medium py-4 px-6 transition-all duration-300"
           :class="canConfirm 
             ? 'button-enabled' 
             : 'button-disabled'"
@@ -67,6 +79,11 @@ const { data } = await useRandomForm()
 
 const showResult = ref(false)
 const showSchoolDropdown = ref(false)
+
+// Refs pour les dropdowns
+const classDropdownRef = ref()
+const specialtiesDropdownRef = ref()
+const gradesDropdownRef = ref()
 
 const SCHOOLS = [
   "Etienne Dolet",
@@ -125,6 +142,23 @@ function getRandomSchool(): School {
 function onSelectSchool(school: School) {
   selectedSchool.value = school
   showSchoolDropdown.value = false
+}
+
+function onDropdownToggle(dropdownName: string, isOpen: boolean) {
+  if (isOpen) {
+    if (dropdownName !== 'class' && classDropdownRef.value) {
+      classDropdownRef.value.close()
+    }
+    if (dropdownName !== 'specialties' && specialtiesDropdownRef.value) {
+      specialtiesDropdownRef.value.close()
+    }
+    if (dropdownName !== 'grades' && gradesDropdownRef.value) {
+      gradesDropdownRef.value.close()
+    }
+    if (dropdownName !== 'school') {
+      showSchoolDropdown.value = false
+    }
+  }
 }
 
 function calculateChances(): { chances: number, reliability: number } {

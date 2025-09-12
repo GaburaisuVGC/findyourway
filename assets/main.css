@@ -24,7 +24,7 @@ html, body {
 
 .button-confirm {
   background-color: #212121;
-  border-radius: 12px;
+  border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -38,23 +38,66 @@ html, body {
   background-color: white;
   border: 2px solid #E0E0E0;
   color: #E0E0E0;
-  border-radius: 12px;
+  border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button-enabled {
-  background-color: #212121;
-  border: none;
-  color: white;
-  border-radius: 12px;
+  background-color: #212121 !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
 }
 
 .button-enabled:hover {
-  background-color: #2d2d2d;
+  background-color: #2d2d2d !important;
   transform: scale(1.02) translateY(-1px);
   box-shadow: 0 10px 25px -3px rgba(33, 33, 33, 0.2);
+}
+
+.option-pill {
+  background-color: #F5F5F5;
+  color: #212121;
+  border: 1px solid transparent;
+  border-radius: 24px;
+  padding: 8px 16px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: fit-content;
+}
+
+.option-pill:hover {
+  background-color: #eeeeee;
+}
+
+.option-pill-selected {
+  background-color: white !important;
+  color: #212121 !important;
+  border: 2px solid #212121 !important;
+}
+
+.school-modify-btn {
+  background-color: white;
+  color: #212121;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.school-modify-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-item {
@@ -74,18 +117,6 @@ html, body {
 
 .dropdown-item-selected:hover {
   background-color: #dbeafe;
-}
-
-.school-modify-btn {
-  transition: all 0.2s ease-in-out;
-  text-decoration: underline;
-}
-
-.school-modify-btn:hover {
-  text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 4px 8px;
-  border-radius: 6px;
 }
 
 .specialty-selected {
