@@ -20,33 +20,26 @@
       </div>
       <div class="relative">
         <button 
-          @click="showSchoolDropdown = !showSchoolDropdown" 
-          class="school-modify-btn md:ml-4"
+           @click="showSchoolDropdown = !showSchoolDropdown"
+           class="school-modify-btn md:ml-4"
         >
           Modifier
         </button>
-        
-        <div v-if="showSchoolDropdown" class="absolute top-full right-0 mt-2 w-80 max-h-60 overflow-y-auto rounded-2xl shadow-lg z-50 border" style="background: white;">
-          <div class="p-4">
-            <div class="space-y-2 mb-4">
-              <button
-                v-for="school in schools"
-                :key="school.id"
-                @click="selectSchool(school)"
-                class="w-full px-4 py-3 text-left hover:bg-white hover:bg-opacity-20 transition-all duration-200 border-b border-white border-opacity-20 last:border-b-0 text-black rounded-lg"
-              >
-                <p class="font-medium">{{ school.name }}</p>
-                <p class="text-sm opacity-90">{{ school.city }}</p>
-              </button>
-            </div>
-            <button
-              @click="confirmSchoolSelection"
-              class="w-full text-white font-medium py-3 px-6 rounded-2xl transition-colors"
-              style="background-color: white; color: #212121;"
-            >
-              Confirmer
-            </button>
-          </div>
+      </div>
+    </div>
+    
+    <div v-if="showSchoolDropdown" class="w-full overflow-hidden rounded-b-2xl shadow-lg border-t-0" style="background: white; border-radius: 0 0 1rem 1rem;">
+      <div class="p-4">
+        <div class="space-y-2 max-h-60 overflow-y-auto">
+          <button
+              v-for="school in schools"
+              :key="school.id"
+              @click="selectSchool(school)"
+              class="w-full px-4 py-3 text-left hover:bg-gray-50 transition-all duration-200 border-b border-gray-100 last:border-b-0 text-black rounded-lg"
+          >
+            <p class="font-medium">{{ school.name }}</p>
+            <p class="text-sm opacity-90">{{ school.city }}</p>
+          </button>
         </div>
       </div>
     </div>
@@ -67,17 +60,9 @@ const emit = defineEmits<{
 }>()
 
 const showSchoolDropdown = ref(false)
-const tempSelectedSchool = ref<School | null>(null)
 
 function selectSchool(school: School) {
-  tempSelectedSchool.value = school
-}
-
-function confirmSchoolSelection() {
-  if (tempSelectedSchool.value) {
-    emit('selectSchool', tempSelectedSchool.value)
-    showSchoolDropdown.value = false
-    tempSelectedSchool.value = null
-  }
+  emit('selectSchool', school)
+  showSchoolDropdown.value = false
 }
 </script>
