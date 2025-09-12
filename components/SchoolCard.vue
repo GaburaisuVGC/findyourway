@@ -26,14 +26,14 @@
           Modifier
         </button>
         
-        <div v-if="showSchoolDropdown" class="absolute top-full right-0 mt-2 w-80 max-h-60 overflow-y-auto rounded-2xl shadow-lg z-50 border" style="background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%);">
+        <div v-if="showSchoolDropdown" class="absolute top-full right-0 mt-2 w-80 max-h-60 overflow-y-auto rounded-2xl shadow-lg z-50 border" style="background: white;">
           <div class="p-4">
             <div class="space-y-2 mb-4">
               <button
                 v-for="school in schools"
                 :key="school.id"
                 @click="selectSchool(school)"
-                class="w-full px-4 py-3 text-left hover:bg-white hover:bg-opacity-20 transition-all duration-200 border-b border-white border-opacity-20 last:border-b-0 text-white rounded-lg"
+                class="w-full px-4 py-3 text-left hover:bg-white hover:bg-opacity-20 transition-all duration-200 border-b border-white border-opacity-20 last:border-b-0 text-black rounded-lg"
               >
                 <p class="font-medium">{{ school.name }}</p>
                 <p class="text-sm opacity-90">{{ school.city }}</p>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl mb-4 relative animate-slide-up">
+  <div class="bg-white rounded-2xl mb-4 relative">
     <button
       @click="toggleOpen"
       class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
@@ -42,7 +42,7 @@
           <input
             v-model="subject.grade"
             type="text"
-            placeholder="Note/20"
+            placeholder="Note"
             class="w-20 p-3 border border-gray-300 rounded-2xl outline-none focus:border-blue-500 text-center transition-all duration-200 grade-input"
             style="color: #212121;"
           >
@@ -96,7 +96,6 @@ const emit = defineEmits<{
 const isOpen = ref(false)
 const internalSubjects = ref<Subject[]>([{ name: '', grade: '' }])
 
-// Watch for changes from parent
 watch(() => props.modelValue, (newValue) => {
   if (newValue && newValue.length > 0) {
     internalSubjects.value = [...newValue]

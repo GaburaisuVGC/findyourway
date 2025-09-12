@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl mb-4 relative animate-slide-up">
+  <div class="bg-white rounded-2xl mb-4 relative">
     <button
       @click="toggleOpen"
       class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"

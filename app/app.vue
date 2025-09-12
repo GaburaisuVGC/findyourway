@@ -33,7 +33,7 @@
         <button
           @click="confirmEstimation"
           :disabled="!canConfirm"
-          class="w-full font-medium py-4 px-6 rounded-2xl transition-all duration-300"
+          class="w-full font-medium py-4 px-6 rounded-3xl transition-all duration-300"
           :class="canConfirm ? 'button-enabled' : 'button-disabled'"
         >
           Confirmer
@@ -41,7 +41,7 @@
       </div>
     </div>
     
-    <div v-else class="animate-fade-in">
+    <div v-else>
       <UniversityResult
         university-name="EDHEC Business School"
         location="Roubaix"
@@ -72,7 +72,6 @@ const { data } = await useRandomForm()
 
 const showResult = ref(false)
 
-// Refs pour les dropdowns
 const classDropdownRef = ref()
 const specialtiesDropdownRef = ref()
 const gradesDropdownRef = ref()
@@ -135,64 +134,27 @@ function onSelectSchool(school: School) {
   selectedSchool.value = school
 }
 
-function onDropdownToggle(dropdownName: string, isOpen: boolean) {
+function onDropdownToggle(type: string, isOpen: boolean) {
   if (isOpen) {
-    if (dropdownName !== 'class' && classDropdownRef.value) {
-      classDropdownRef.value.close()
-    }
-    if (dropdownName !== 'specialties' && specialtiesDropdownRef.value) {
-      specialtiesDropdownRef.value.close()
-    }
-    if (dropdownName !== 'grades' && gradesDropdownRef.value) {
-      gradesDropdownRef.value.close()
-    }
-  }
-}
-
-function calculateChances(): { chances: number, reliability: number } {
-  let baseChances = Math.floor(Math.random() * 101)
-  let reliability = 3.5 + Math.random() * 1.5
-  
-  const validGrades = grades.value.filter(g => g.name.trim() && g.grade.trim())
-  if (validGrades.length > 0) {
-    const avgGrade = validGrades.reduce((sum, g) => {
-      const gradeValue = parseFloat(g.grade.toString())
-      return sum + (isNaN(gradeValue) ? 0 : gradeValue)
-    }, 0) / validGrades.length
-    
-    if (avgGrade >= 16) baseChances = Math.min(100, baseChances + 20)
-    else if (avgGrade >= 14) baseChances = Math.min(100, baseChances + 10)
-    else if (avgGrade >= 12) baseChances = Math.min(100, baseChances + 5)
-    else baseChances = Math.max(0, baseChances - 10)
-    
-    reliability += 0.3
-  }
-  
-  if (selectedSpecialties.value.length > 0) {
-    baseChances = Math.min(100, baseChances + selectedSpecialties.value.length * 5)
-    reliability += 0.2
-  }
-  
-  reliability = Math.min(5, reliability)
-  
-  return {
-    chances: baseChances,
-    reliability: Math.round(reliability * 10) / 10
+    if (type !== 'class') classDropdownRef.value?.close()
+    if (type !== 'specialties') specialtiesDropdownRef.value?.close()
+    if (type !== 'grades') gradesDropdownRef.value?.close()
   }
 }
 
 function confirmEstimation() {
-  if (!canConfirm.value) return
-  
-  estimationResult.value = calculateChances()
+  estimationResult.value = {
+    chances: Math.floor(Math.random() * 100),
+    reliability: Math.floor(Math.random() * 5) + 1
+  }
   showResult.value = true
 }
 
 function resetForm() {
   showResult.value = false
-  selectedSchool.value = getRandomSchool()
   selectedClass.value = { level: '', type: '' }
   selectedSpecialties.value = []
   grades.value = []
+  estimationResult.value = { chances: 0, reliability: 0 }
 }
 </script>
