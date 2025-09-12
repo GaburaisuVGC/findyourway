@@ -19,7 +19,7 @@
   
   <button
     @click="$emit('retry')"
-    class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors"
+    class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors button-enabled"
     style="background-color: #212121;"
   >
     Tester une autre formation

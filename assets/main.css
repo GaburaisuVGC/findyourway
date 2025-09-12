@@ -148,6 +148,11 @@ html, body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
+.little-button {
+    padding: 16px 24px;
+    width: 124px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

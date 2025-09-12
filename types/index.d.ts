@@ -2,10 +2,12 @@ export interface School {
   id: number
   name: string
   city: string
+  type: "Privé" | "Public"
 }
 
 export interface ClassCard {
   level: string
+  type: 'Général' | 'Technologique' | 'Professionnel'
   description?: string
 }
 
