@@ -29,7 +29,10 @@ function randomFrom<T>(arr: T[]) { return arr[Math.floor(Math.random() * arr.len
 export default defineEventHandler(() => {
   const schoolName = randomFrom(SCHOOLS)
   // random id generator
-  const school: School = { id: cryptoRandomId(), name: schoolName }
+  const school: School = {
+      id: cryptoRandomId(), name: schoolName,
+      city: ''
+  }
 
   const levels = ['Seconde', 'Première', 'Terminale']
   const streams = ['Général', 'Technologique', 'Professionnel']
@@ -54,6 +57,6 @@ export default defineEventHandler(() => {
 })
 
 function cryptoRandomId() {
-  // random id generator using Math.random and base36
-  return Math.random().toString(36).slice(2, 9)
+  // random id generator using Math.random
+  return Math.floor(Math.random() * 1000000)
 }
