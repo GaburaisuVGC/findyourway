@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white rounded-xl mb-4 relative animate-slide-up">
+  <div class="bg-white rounded-2xl mb-4 relative animate-slide-up">
     <button
       @click="toggleOpen"
-      class="w-full p-4 flex items-center justify-between text-left rounded-xl border-none outline-none transition-all duration-200 hover:shadow-md"
+      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
       style="color: #212121;"
     >
       <div class="flex-1">
@@ -25,45 +25,43 @@
       </svg>
     </button>
     
-    <div v-if="isOpen" class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-lg z-50 border dropdown-shadow animate-fade-in">
-      <div class="p-4">
-        <div class="mb-4">
-          <div class="flex flex-wrap gap-2">
-            <button
-              v-for="level in levels"
-              :key="level"
-              @click="selectedLevel = level"
-              class="option-pill"
-              :class="{ 'option-pill-selected': selectedLevel === level }"
-            >
-              {{ level }}
-            </button>
-          </div>
+    <div v-if="isOpen" class="p-4">
+      <div class="mb-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="level in levels"
+            :key="level"
+            @click="selectedLevel = level"
+            class="option-pill"
+            :class="{ 'option-pill-selected': selectedLevel === level }"
+          >
+            {{ level }}
+          </button>
         </div>
-        
-        <div class="border-t pt-4 mb-4">
-          <h4 class="font-medium mb-3" style="color: #212121;">Type de bac</h4>
-          <div class="flex flex-wrap gap-2">
-            <button
-              v-for="type in bacTypes"
-              :key="type"
-              @click="selectedType = type"
-              class="option-pill"
-              :class="{ 'option-pill-selected': selectedType === type }"
-            >
-              {{ type }}
-            </button>
-          </div>
-        </div>
-        
-        <button
-          @click="confirmSelection"
-          class="w-full text-white font-medium py-4 px-6 button-confirm"
-          style="background-color: #212121;"
-        >
-          Confirmer
-        </button>
       </div>
+      
+      <div class="border-t pt-4 mb-4">
+        <h4 class="font-medium mb-3" style="color: #212121;">Type de bac</h4>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="type in bacTypes"
+            :key="type"
+            @click="selectedType = type"
+            class="option-pill"
+            :class="{ 'option-pill-selected': selectedType === type }"
+          >
+            {{ type }}
+          </button>
+        </div>
+      </div>
+      
+      <button
+        @click="confirmSelection"
+        class="w-full text-white font-medium py-4 px-6 button-confirm"
+        style="background-color: #212121;"
+      >
+        Confirmer
+      </button>
     </div>
   </div>
 </template>

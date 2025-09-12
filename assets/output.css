@@ -236,6 +236,9 @@
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
@@ -295,6 +298,9 @@
   }
   .w-20 {
     width: calc(var(--spacing) * 20);
+  }
+  .w-80 {
+    width: calc(var(--spacing) * 80);
   }
   .w-\[120px\] {
     width: 120px;
@@ -356,11 +362,25 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .space-y-2 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
   .space-y-3 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-4 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .overflow-y-auto {
@@ -411,6 +431,9 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-white {
+    border-color: var(--color-white);
+  }
   .bg-black {
     background-color: var(--color-black);
   }
@@ -458,6 +481,9 @@
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
+  }
+  .pt-6 {
+    padding-top: calc(var(--spacing) * 6);
   }
   .text-center {
     text-align: center;
@@ -521,6 +547,9 @@
   }
   .underline {
     text-decoration-line: underline;
+  }
+  .opacity-90 {
+    opacity: 90%;
   }
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
@@ -604,6 +633,13 @@
       }
     }
   }
+  .hover\:bg-white {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-white);
+      }
+    }
+  }
   .hover\:shadow-md {
     &:hover {
       @media (hover: hover) {
@@ -647,29 +683,14 @@
       flex: 1;
     }
   }
-  .md\:grid-cols-3 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
   .md\:items-center {
     @media (width >= 48rem) {
       align-items: center;
     }
   }
-  .md\:items-start {
-    @media (width >= 48rem) {
-      align-items: flex-start;
-    }
-  }
   .md\:justify-between {
     @media (width >= 48rem) {
       justify-content: space-between;
-    }
-  }
-  .md\:self-start {
-    @media (width >= 48rem) {
-      align-self: flex-start;
     }
   }
   .md\:px-8 {
@@ -713,11 +734,11 @@ html, body {
   box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 .gradient-school {
-  background: linear-gradient(135deg, #B176FF 0%, #FF7342 100%);
+  background: linear-gradient(135deg, #FF7342 0% 70%, #B176FF 70% 100%);
 }
 .button-confirm {
   background-color: #212121;
-  border-radius: 20px;
+  border-radius: 24px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .button-confirm:hover {
@@ -729,14 +750,14 @@ html, body {
   background-color: white;
   border: 2px solid #E0E0E0;
   color: #E0E0E0;
-  border-radius: 20px;
+  border-radius: 24px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .button-enabled {
   background-color: #212121 !important;
   border: none !important;
   color: white !important;
-  border-radius: 20px;
+  border-radius: 24px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
 }
@@ -772,7 +793,7 @@ html, body {
   background-color: white;
   color: #212121;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 16px;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
   border: none;
@@ -805,6 +826,7 @@ html, body {
 }
 .grade-input {
   transition: all 0.2s ease-in-out;
+  border-radius: 16px;
 }
 .grade-input:focus {
   border-color: #3b82f6;
@@ -812,10 +834,10 @@ html, body {
   transform: scale(1.02);
 }
 .dropdown-rounded {
-  border-radius: 12px;
+  border-radius: 16px;
 }
 .card-rounded {
-  border-radius: 12px;
+  border-radius: 16px;
 }
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in-out;

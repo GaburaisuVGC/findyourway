@@ -1,41 +1,83 @@
 <template>
-  <div class="rounded-xl p-6 text-white relative mb-6 animate-fade-in md:flex md:items-center md:justify-between" style="background: linear-gradient(135deg, #B176FF 0%, #FF7342 100%);">
-    <div class="md:flex-1">
-      <h2 class="text-xl font-bold mb-2">{{ school.name }}</h2>
-      <div class="flex items-center gap-4 text-sm mb-4 md:mb-0">
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-          </svg>
-          <span>Paris</span>
+  <div class="relative mb-6 animate-fade-in">
+    <div class="rounded-2xl p-6 text-white md:flex md:items-center md:justify-between" style="background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%);">
+      <div class="md:flex-1">
+        <h2 class="text-xl font-bold mb-2">{{ school.name }}</h2>
+        <div class="flex items-center gap-4 text-sm mb-4 md:mb-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+            </svg>
+            <span>Paris</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4z" clip-rule="evenodd" />
+            </svg>
+            <span>{{ schoolType }}</span>
+          </div>
         </div>
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4z" clip-rule="evenodd" />
-          </svg>
-          <span>{{ schoolType }}</span>
+      </div>
+      <div class="relative">
+        <button 
+          @click="showSchoolDropdown = !showSchoolDropdown" 
+          class="school-modify-btn md:ml-4"
+        >
+          Modifier
+        </button>
+        
+        <div v-if="showSchoolDropdown" class="absolute top-full right-0 mt-2 w-80 max-h-60 overflow-y-auto rounded-2xl shadow-lg z-50 border" style="background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%);">
+          <div class="p-4">
+            <div class="space-y-2 mb-4">
+              <button
+                v-for="school in schools"
+                :key="school.id"
+                @click="selectSchool(school)"
+                class="w-full px-4 py-3 text-left hover:bg-white hover:bg-opacity-20 transition-all duration-200 border-b border-white border-opacity-20 last:border-b-0 text-white rounded-lg"
+              >
+                <p class="font-medium">{{ school.name }}</p>
+                <p class="text-sm opacity-90">{{ school.city }}</p>
+              </button>
+            </div>
+            <button
+              @click="confirmSchoolSelection"
+              class="w-full text-white font-medium py-3 px-6 rounded-2xl transition-colors"
+              style="background-color: white; color: #212121;"
+            >
+              Confirmer
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <button 
-      @click="$emit('modify')" 
-      class="school-modify-btn md:ml-4"
-    >
-      Modifier
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { School } from '../types'
 
-defineProps<{
+const props = defineProps<{
   school: School
   schoolType?: string
+  schools: School[]
 }>()
 
-defineEmits<{
-  (e: 'modify'): void
+const emit = defineEmits<{
+  (e: 'selectSchool', school: School): void
 }>()
 
+const showSchoolDropdown = ref(false)
+const tempSelectedSchool = ref<School | null>(null)
+
+function selectSchool(school: School) {
+  tempSelectedSchool.value = school
+}
+
+function confirmSchoolSelection() {
+  if (tempSelectedSchool.value) {
+    emit('selectSchool', tempSelectedSchool.value)
+    showSchoolDropdown.value = false
+    tempSelectedSchool.value = null
+  }
+}
 </script>

@@ -1,46 +1,40 @@
 <template>
   <AppLayout>
-    <div v-if="!showResult">
-      <SchoolCard 
-        :school="selectedSchool" 
+    <div v-if="!showResult" class="space-y-4">
+      <SchoolCard
+        :school="selectedSchool"
         :school-type="schoolType"
-        @modify="showSchoolDropdown = true"
-      />
-      
-      <SchoolDropdown
-        :selected-school="selectedSchool"
         :schools="allSchools"
-        :is-open="showSchoolDropdown"
-        @select="onSelectSchool"
-        @close="showSchoolDropdown = false"
+        @select-school="onSelectSchool"
       />
       
-      <ClassDropdown 
+      <ClassDropdown
         ref="classDropdownRef"
-        v-model="selectedClass" 
-        @toggle="onDropdownToggle('class', $event)"
+        v-model="selectedClass"
+        @open="onDropdownToggle('class', true)"
+        @close="onDropdownToggle('class', false)"
       />
       
-      <SpecialtiesDropdown 
+      <SpecialtiesDropdown
         ref="specialtiesDropdownRef"
-        v-model="selectedSpecialties" 
-        @toggle="onDropdownToggle('specialties', $event)"
+        v-model="selectedSpecialties"
+        @open="onDropdownToggle('specialties', true)"
+        @close="onDropdownToggle('specialties', false)"
       />
       
-      <GradesDropdown 
+      <GradesDropdown
         ref="gradesDropdownRef"
-        v-model="grades" 
-        @toggle="onDropdownToggle('grades', $event)"
+        v-model="grades"
+        @open="onDropdownToggle('grades', true)"
+        @close="onDropdownToggle('grades', false)"
       />
       
-      <div class="mt-8">
+      <div class="pt-6">
         <button
           @click="confirmEstimation"
           :disabled="!canConfirm"
-          class="w-full font-medium py-4 px-6 transition-all duration-300"
-          :class="canConfirm 
-            ? 'button-enabled' 
-            : 'button-disabled'"
+          class="w-full font-medium py-4 px-6 rounded-2xl transition-all duration-300"
+          :class="canConfirm ? 'button-enabled' : 'button-disabled'"
         >
           Confirmer
         </button>
@@ -66,7 +60,6 @@
 <script setup lang="ts">
 import AppLayout from '../components/AppLayout.vue'
 import SchoolCard from '../components/SchoolCard.vue'
-import SchoolDropdown from '../components/SchoolDropdown.vue'
 import ClassDropdown from '../components/ClassDropdown.vue'
 import SpecialtiesDropdown from '../components/SpecialtiesDropdown.vue'
 import GradesDropdown from '../components/GradesDropdown.vue'
@@ -78,7 +71,6 @@ import type { School } from '../types'
 const { data } = await useRandomForm()
 
 const showResult = ref(false)
-const showSchoolDropdown = ref(false)
 
 // Refs pour les dropdowns
 const classDropdownRef = ref()
@@ -141,7 +133,6 @@ function getRandomSchool(): School {
 
 function onSelectSchool(school: School) {
   selectedSchool.value = school
-  showSchoolDropdown.value = false
 }
 
 function onDropdownToggle(dropdownName: string, isOpen: boolean) {
@@ -155,9 +146,6 @@ function onDropdownToggle(dropdownName: string, isOpen: boolean) {
     if (dropdownName !== 'grades' && gradesDropdownRef.value) {
       gradesDropdownRef.value.close()
     }
-    if (dropdownName !== 'school') {
-      showSchoolDropdown.value = false
-    }
   }
 }
 
@@ -165,9 +153,13 @@ function calculateChances(): { chances: number, reliability: number } {
   let baseChances = Math.floor(Math.random() * 101)
   let reliability = 3.5 + Math.random() * 1.5
   
-  const validGrades = grades.value.filter(g => g.name && g.grade)
+  const validGrades = grades.value.filter(g => g.name.trim() && g.grade.trim())
   if (validGrades.length > 0) {
-    const avgGrade = validGrades.reduce((sum, g) => sum + parseFloat(g.grade), 0) / validGrades.length
+    const avgGrade = validGrades.reduce((sum, g) => {
+      const gradeValue = parseFloat(g.grade.toString())
+      return sum + (isNaN(gradeValue) ? 0 : gradeValue)
+    }, 0) / validGrades.length
+    
     if (avgGrade >= 16) baseChances = Math.min(100, baseChances + 20)
     else if (avgGrade >= 14) baseChances = Math.min(100, baseChances + 10)
     else if (avgGrade >= 12) baseChances = Math.min(100, baseChances + 5)
@@ -198,7 +190,6 @@ function confirmEstimation() {
 
 function resetForm() {
   showResult.value = false
-  showSchoolDropdown.value = false
   selectedSchool.value = getRandomSchool()
   selectedClass.value = { level: '', type: '' }
   selectedSpecialties.value = []

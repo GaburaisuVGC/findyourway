@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl p-6 mb-4">
+  <div class="bg-white rounded-2xl p-6 mb-4">
     <LightningCircle :percentage="chances" />
     
     <div class="text-center mb-4">
@@ -19,7 +19,7 @@
   
   <button
     @click="$emit('retry')"
-    class="w-full text-white font-medium py-4 px-6 rounded-xl transition-colors"
+    class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors"
     style="background-color: #212121;"
   >
     Tester une autre formation

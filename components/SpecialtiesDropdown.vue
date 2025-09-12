@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white rounded-xl mb-4 relative">
+  <div class="bg-white rounded-2xl mb-4 relative">
     <button
-      @click="isOpen = !isOpen"
-      class="w-full p-4 flex items-center justify-between text-left rounded-xl border-none outline-none"
+      @click="toggleOpen"
+      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
       style="color: #212121;"
     >
       <div class="flex-1">
@@ -25,52 +25,41 @@
       </svg>
     </button>
     
-    <div v-if="isOpen" class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-lg z-50 border">
-      <div class="p-4">
-        <div class="mb-4">
-          <div class="grid grid-cols-1 gap-2">
-            <button
-              v-for="specialty in specialties"
-              :key="specialty"
-              @click="toggleSpecialty(specialty)"
-              class="text-left p-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-between"
-              :class="{ 'bg-blue-50': selectedSpecialties.includes(specialty) }"
-              style="color: #212121;"
-            >
-              <span>{{ specialty }}</span>
-              <svg 
-                v-if="selectedSpecialties.includes(specialty)" 
-                class="w-5 h-5 text-blue-600" 
-                fill="currentColor" 
-                viewBox="0 0 20 20"
-              >
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-              </svg>
-            </button>
-          </div>
+    <div v-if="isOpen" class="p-4">
+      <div class="mb-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="specialty in specialties"
+            :key="specialty"
+            @click="toggleSpecialty(specialty)"
+            class="option-pill"
+            :class="{ 'option-pill-selected': selectedSpecialties.includes(specialty) }"
+          >
+            {{ specialty }}
+          </button>
         </div>
-        
-        <button
-          @click="confirmSelection"
-          class="w-full text-white font-medium py-4 px-6 rounded-lg transition-colors"
-          style="background-color: #212121;"
-        >
-          Confirmer
-        </button>
       </div>
+      
+      <button
+        @click="confirmSelection"
+        class="w-full text-white font-medium py-4 px-6 button-confirm"
+        style="background-color: #212121;"
+      >
+        Confirmer
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-
 const props = defineProps<{
   modelValue: string[]
 }>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string[]): void
+  (e: 'open'): void
+  (e: 'close'): void
 }>()
 
 const isOpen = ref(false)
@@ -91,6 +80,15 @@ const specialties = [
 
 const isComplete = computed(() => selectedSpecialties.value.length > 0)
 
+function toggleOpen() {
+  isOpen.value = !isOpen.value
+  if (isOpen.value) {
+    emit('open')
+  } else {
+    emit('close')
+  }
+}
+
 function toggleSpecialty(specialty: string) {
   const index = selectedSpecialties.value.indexOf(specialty)
   if (index > -1) {
@@ -103,5 +101,12 @@ function toggleSpecialty(specialty: string) {
 function confirmSelection() {
   emit('update:modelValue', [...selectedSpecialties.value])
   isOpen.value = false
+  emit('close')
 }
+
+defineExpose({
+  close: () => {
+    isOpen.value = false
+  }
+})
 </script>
