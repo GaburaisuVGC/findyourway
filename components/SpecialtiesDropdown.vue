@@ -2,17 +2,16 @@
   <div class="bg-white rounded-2xl mb-4 relative">
     <button
       @click="toggleOpen"
-      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
-      style="color: #212121;"
+      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200 dark-text"
     >
       <div class="flex-1">
         <div class="font-medium text-base">Spécialités</div>
-        <div v-if="isComplete && !isOpen" class="text-sm mt-1" style="color: #212121;">
+        <div v-if="isComplete && !isOpen" class="text-sm mt-1 dark-text">
           {{ selectedSpecialties.join(', ') }}
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <div v-if="!isComplete && !isOpen" class="text-sm" style="color: #757575;">
+        <div v-if="!isComplete && !isOpen" class="text-sm gray-text">
           À compléter
         </div>
         <svg 
@@ -44,8 +43,7 @@
       
       <button
         @click="confirmSelection"
-        class="w-full text-white font-medium py-4 px-6 button-confirm"
-        style="background-color: #212121;"
+        class="w-full text-white font-medium py-4 px-6 button-confirm dark-background"
       >
         Confirmer
       </button>

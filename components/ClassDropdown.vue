@@ -2,17 +2,16 @@
   <div class="bg-white rounded-2xl mb-4 relative">
     <button
       @click="toggleOpen"
-      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
-      style="color: #212121;"
+      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200 dark-text"
     >
       <div class="flex-1">
         <div class="font-medium text-base">Classe</div>
-        <div v-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200" style="color: #212121;">
+        <div v-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200 dark-text">
           {{ selectedLevel }}{{ selectedType ? ', ' + selectedType : '' }}
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <div v-if="!isComplete && !isOpen" class="text-sm transition-all duration-200" style="color: #757575;">
+        <div v-if="!isComplete && !isOpen" class="text-sm transition-all duration-200 gray-text">
           À compléter
         </div>
         <svg 
@@ -43,7 +42,7 @@
       </div>
       
       <div class="border-t pt-4 mb-4">
-        <h4 class="font-medium mb-3" style="color: #212121;">Type de bac</h4>
+        <h4 class="font-medium mb-3 dark-text">Type de bac</h4>
         <div class="flex flex-wrap gap-2">
           <button
             v-for="type in bacTypes"
@@ -59,8 +58,7 @@
       
       <button
         @click="confirmSelection"
-        class="w-full text-white font-medium py-4 px-6 button-confirm"
-        style="background-color: #212121;"
+        class="w-full text-white font-medium py-4 px-6 button-confirm dark-background"
       >
         Confirmer
       </button>

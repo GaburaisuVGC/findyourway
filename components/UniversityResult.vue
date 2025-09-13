@@ -1,6 +1,6 @@
 <template>
-  <div class="rounded-2xl p-4 mb-4 text-center" style="background-color: #EEE8E4;">
-    <div class="flex items-center justify-center gap-2 text-sm mb-1" style="color: #757575;">
+  <div class="rounded-2xl p-4 mb-4 text-center beige-background">
+    <div class="flex items-center justify-center gap-2 text-sm mb-1 gray-text">
       <span>{{ universityName }}</span>
       <span>|</span>
       <div class="flex items-center gap-1">
@@ -10,7 +10,7 @@
         <span>{{ location }}</span>
       </div>
     </div>
-    <div class="text-lg font-medium text-center" style="color: #212121;">
+    <div class="text-lg font-medium text-center dark-text">
       {{ specialty }}
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col" style="background-color: #F7F3F0;">
+  <div class="min-h-screen flex flex-col body-background">
     <header class="bg-white min-h-[60px] flex items-center">
       <div class="w-full px-4 md:px-8 lg:px-16 xl:px-24 flex items-center">
         <img 

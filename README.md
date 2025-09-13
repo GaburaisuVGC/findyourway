@@ -76,5 +76,9 @@ Après la soumission initiale, j’ai constaté qu’un de mes derniers commits 
 Je l’ai corrigée sur la branche principale dans ce commit :
 `fix: restore missing random feature (post-test correction)`
 
-Cette modification est **hors du temps imparti**, mais reflète ce que
-j’aurais livré si j’avais pu faire un dernier passage de QA avant de pousser.
+J'ai aussi souhaité amélioré un composant fait à mon initiative ainsi que la qualité du code pour les styles CSS dans l'HTML, dans ces commits :
+`fix: SchoolCard dropdown margin fix (post-test correction)`
+`chore: Every CSS style must be in main.css (post-test correction)`
+
+Ces modifications sont **hors du temps imparti**, mais reflète ce que j’aurais livré si j’avais pu faire un dernier passage de QA avant de pousser.
+Je souhaitais privilégier la qualité du code et le design, sachant que je ne pouvais pas améliorer la rapidité.

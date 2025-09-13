@@ -4,7 +4,7 @@
     
     <div class="text-center mb-4">
       <div class="flex items-center justify-center gap-2 text-xl mb-2">
-        <span class="font-bold" style="color: #212121;">{{ chances }}%</span>
+        <span class="font-bold dark-text">{{ chances }}%</span>
         <span style="color: #212121;">·</span>
         <span style="color: #212121;">{{ getChanceLevel(chances) }}</span>
       </div>
@@ -15,7 +15,7 @@
       <Stars :rating="reliability" />
     </div>
 
-    <p class="text-xs text-center mb-6 leading-relaxed" style="color: #757575;">
+    <p class="text-xs text-center mb-6 leading-relaxed gray-text">
       Cette estimation est fournie à titre indicatif et ne garantit en aucun cas la décision d'admission de l'établissement.
     </p>
   </div>
@@ -23,8 +23,7 @@
   <div class="pt-6">
   <button
     @click="$emit('retry')"
-    class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors button-enabled"
-    style="background-color: #212121;"
+    class="w-full text-white font-medium py-4 px-6 rounded-2xl transition-colors button-enabled dark-background"
   >
     Tester une autre formation
   </button>

@@ -157,8 +157,47 @@ html, body {
     font-size: xxx-large;
 }
 
+.lightning-div {
+    position: relative;
+    top: 22%;
+}
+
 .reliability {
     font-size: 12px;
+}
+
+.schoolcard-div {
+  background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.schoolcard-dropdown {
+  background: white;
+  border-radius: 0 0 1rem 1rem;
+  position: relative;
+  z-index: 1;
+  margin-top: -1vh;
+}
+
+.body-background {
+  background-color: #F7F3F0;
+}
+
+.dark-text {
+  color: #212121;
+}
+
+.gray-text {
+  color: #757575;
+}
+
+.dark-background {
+  background-color: #212121;
+}
+
+.beige-background {
+  background-color: #EEE8E4;
 }
 
 @keyframes fadeIn {

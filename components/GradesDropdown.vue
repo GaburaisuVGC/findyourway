@@ -2,17 +2,16 @@
   <div class="bg-white rounded-2xl mb-4 relative">
     <button
       @click="toggleOpen"
-      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200"
-      style="color: #212121;"
+      class="w-full p-4 flex items-center justify-between text-left rounded-2xl border-none outline-none transition-all duration-200 dark-text"
     >
       <div class="flex-1">
         <div class="font-medium text-base">Notes</div>
-        <div v-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200" style="color: #212121;">
+        <div v-if="isComplete && !isOpen" class="text-sm mt-1 transition-all duration-200 dark-text">
           {{ subjectsCount }} matière{{ subjectsCount > 1 ? 's' : '' }} ajoutée{{ subjectsCount > 1 ? 's' : '' }}
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <div v-if="!isComplete && !isOpen" class="text-sm transition-all duration-200" style="color: #757575;">
+        <div v-if="!isComplete && !isOpen" class="text-sm transition-all duration-200 gray-text">
           À compléter
         </div>
         <svg 
@@ -38,15 +37,13 @@
             v-model="subject.name"
             type="text"
             placeholder="Nom de la matière"
-            class="flex-1 p-3 border border-gray-300 rounded-2xl outline-none focus:border-blue-500 transition-all duration-200 grade-input"
-            style="color: #212121;"
+            class="flex-1 p-3 border border-gray-300 rounded-2xl outline-none focus:border-blue-500 transition-all duration-200 grade-input dark-text"
           >
           <input
             v-model="subject.grade"
             type="text"
             placeholder="Note"
-            class="w-20 p-3 border border-gray-300 rounded-2xl outline-none focus:border-blue-500 text-center transition-all duration-200 grade-input"
-            style="color: #212121;"
+            class="w-20 p-3 border border-gray-300 rounded-2xl outline-none focus:border-blue-500 text-center transition-all duration-200 grade-input dark-text"
           >
           <button
             @click="removeSubject(index)"
@@ -62,16 +59,14 @@
       
       <button
         @click="addSubject"
-        class="w-full mb-4 p-3 border-2 border-dashed border-gray-300 rounded-2xl hover:border-gray-400 hover:bg-gray-50 transition-all duration-200"
-        style="color: #757575;"
+        class="w-full mb-4 p-3 border-2 border-dashed border-gray-300 rounded-2xl hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 gray-text"
       >
         + Ajouter une matière
       </button>
       
       <button
         @click="confirmSelection"
-        class="w-full text-white font-medium py-4 px-6 button-confirm"
-        style="background-color: #212121;"
+        class="w-full text-white font-medium py-4 px-6 button-confirm dark-background"
       >
         Confirmer
       </button>
