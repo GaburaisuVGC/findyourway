@@ -77,30 +77,46 @@ const classDropdownRef = ref();
 const specialtiesDropdownRef = ref();
 const gradesDropdownRef = ref();
 
-const allSchools = ref(SCHOOLS)
-const selectedSchool = ref(data?.value?.school ?? randomSchool())
-const selectedClass = ref<ClassCard>({
-  level: data.value?.classCard?.level ?? '',
-  type: data.value?.classCard?.type ?? 'Général'
-})
-const selectedSpecialties = ref<string[]>([])
-const grades = ref<Array<{ name: string; grade: string }>>([])
+function randomSchool(): School {
+  return SCHOOLS[Math.floor(Math.random() * SCHOOLS.length)]!;
+}
+
+function randomClass(): ClassCard {
+  const levels = ["Seconde", "Première", "Terminale"];
+  const streams: Array<"Général" | "Technologique" | "Professionnel"> = [
+    "Général",
+    "Technologique",
+    "Professionnel",
+  ];
+  return {
+    level: levels[Math.floor(Math.random() * levels.length)]!,
+    type: streams[Math.floor(Math.random() * streams.length)]!,
+  };
+}
+
+const allSchools = ref(SCHOOLS);
+const selectedSchool = ref<School>(data?.value?.school ?? randomSchool());
+const selectedClass = ref<ClassCard>(
+  data?.value?.classCard ?? randomClass()
+);
+const selectedSpecialties = ref<string[]>([]);
+const grades = ref<Array<{ name: string; grade: string }>>([]);
 
 const estimationResult = ref({
   chances: 0,
   reliability: 0,
-})
+});
 
 const canConfirm = computed(() => {
-  return selectedSchool.value && selectedClass.value.level && selectedClass.value.type
-})
-
-function randomSchool(): School {
-  return SCHOOLS[Math.floor(Math.random() * SCHOOLS.length)]!
-}
+  return (
+    selectedSchool.value &&
+    selectedClass.value.level &&
+    selectedClass.value.type
+  );
+});
 
 function onSelectSchool(school: School) {
-  selectedSchool.value = school
+  selectedSchool.value = school;
 }
 
 function onDropdownToggle(type: string, isOpen: boolean) {
@@ -114,16 +130,18 @@ function onDropdownToggle(type: string, isOpen: boolean) {
 function confirmEstimation() {
   estimationResult.value = {
     chances: Math.floor(Math.random() * 100),
-    reliability: 3.5 + Math.random() * 1.5
-  }
-  showResult.value = true
+    reliability: 3.5 + Math.random() * 1.5,
+  };
+  showResult.value = true;
 }
 
 function resetForm() {
-  showResult.value = false
-  selectedClass.value = { level: '', type: 'Général' }
-  selectedSpecialties.value = []
-  grades.value = []
-  estimationResult.value = { chances: 0, reliability: 0 }
+  showResult.value = false;
+  selectedSchool.value = selectedSchool.value ?? randomSchool();
+  // Je n'ai pas souhaité randomiser afin de montrer le bouton Confirmer quand le formulaire n'est pas complet.
+  selectedClass.value = { level: '', type: 'Général' };
+  selectedSpecialties.value = [];
+  grades.value = [];
+  estimationResult.value = { chances: 0, reliability: 0 };
 }
 </script>

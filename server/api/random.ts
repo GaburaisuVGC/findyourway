@@ -23,7 +23,9 @@ export const SCHOOLS: School[] = [
   { id: 19, name: "Lycée privé Saint-Michel de Picpus", city: "Paris", type: "Privé" }
 ]
 
-function randomFrom<T>(arr: T[]) { return arr[Math.floor(Math.random() * arr.length)] }
+function randomFrom<T>(arr: T[]) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
 
 export default defineEventHandler(() => {
   const school = randomFrom(SCHOOLS)
@@ -31,10 +33,10 @@ export default defineEventHandler(() => {
   const levels = ['Seconde', 'Première', 'Terminale']
   const streams: Array<'Général' | 'Technologique' | 'Professionnel'> = ['Général', 'Technologique', 'Professionnel']
 
-const classCard: ClassCard = {
-  level: randomFrom(levels),
-  type: randomFrom(streams),
-}
+  const classCard: ClassCard = {
+    level: randomFrom(levels),
+    type: randomFrom(streams),
+  }
 
   const response: RandomFormResponse = {
     school,

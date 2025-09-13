@@ -68,3 +68,13 @@ Le site sera accessible sur `http://localhost:3000`.
 ## 📚 Notes
 
 * La liste des lycées et la sélection de classe sont générées aléatoirement au reload de la page.
+
+## 🛠️ Post-test note (J+1)
+
+Après la soumission initiale, j’ai constaté qu’un de mes derniers commits avait supprimé par erreur la fonctionnalité d’aléatoire pour l'établissement et la classe, que j'avais implémenté avec succès au début du développement du projet.
+
+Je l’ai corrigée sur la branche principale dans ce commit :
+`fix: restore missing random feature (post-test correction)`
+
+Cette modification est **hors du temps imparti**, mais reflète ce que
+j’aurais livré si j’avais pu faire un dernier passage de QA avant de pousser.
