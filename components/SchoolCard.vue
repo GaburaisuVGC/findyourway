@@ -1,6 +1,6 @@
 <template>
   <div class="relative mb-6 animate-fade-in">
-    <div class="rounded-2xl p-6 text-white md:flex md:items-center md:justify-between" style="background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%);">
+    <div class="rounded-2xl p-6 text-white md:flex md:items-center md:justify-between" style="background: linear-gradient(90deg,rgba(255, 115, 66, 1) 60%, rgba(177, 118, 255, 1) 100%); position: relative; z-index: 2;">
       <div class="md:flex-1">
         <h2 class="text-xl font-bold mb-2">{{ school.name }}</h2>
         <div class="flex items-center gap-4 text-sm mb-4 md:mb-0">
@@ -28,7 +28,7 @@
       </div>
     </div>
     
-    <div v-if="showSchoolDropdown" class="w-full overflow-hidden rounded-b-2xl shadow-lg border-t-0" style="background: white; border-radius: 0 0 1rem 1rem;">
+    <div v-if="showSchoolDropdown" class="w-full overflow-hidden rounded-b-2xl shadow-lg border-t-0" style="background: white; border-radius: 0 0 1rem 1rem; position: relative; z-index: 1; margin-top: -1vh;">
       <div class="p-4">
         <div class="space-y-2 max-h-60 overflow-y-auto">
           <button
